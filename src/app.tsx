@@ -9,7 +9,7 @@ interface Log {
 }
 
 export const App = () => {
-	const iframeRef = useRef<HTMLIFrameElement>();
+	const iframeRef = useRef<HTMLIFrameElement>(null);
 	const [logs, setLogs] = useState<Log[]>([]);
 
 	useEffect(() => {
@@ -24,16 +24,20 @@ export const App = () => {
 			setLogs((prevLogs) => [...prevLogs, newLog]);
 		};
 
-		const view = iframeRef.current.contentDocument.defaultView;
-		view.eval(`(${createConsoleProxy})()`);
+		const view = iframeRef.current?.contentDocument?.defaultView;
+		if (!view) return;
 
+		view.eval(`(${createConsoleProxy})()`);
 		window.addEventListener("message", onMessage);
+
 		return () => window.removeEventListener("message", onMessage);
 	}, []);
 
 	const onBlur: JSX.FocusEventHandler<HTMLTextAreaElement> = (e) => {
 		setLogs([]);
-		const doc = iframeRef.current.contentDocument;
+
+		const doc = iframeRef.current?.contentDocument;
+		if (!doc) return;
 
 		doc.open();
 		doc.write(e.currentTarget.value);

@@ -3,8 +3,9 @@
 		"checkJs": true,
 		"jsx": "react-jsx",
 		"jsxImportSource": "preact",
+		"moduleResolution": "bundler",
 		"noEmit": true,
+		"strict": true,
 		"target": "esnext",
-		"moduleResolution": "bundler"
 	}
 }

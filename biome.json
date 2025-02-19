@@ -9,6 +9,9 @@
 		"rules": {
 			"nursery": {
 				"useSortedClasses": "warn"
+			},
+			"style": {
+				"noNonNullAssertion": "off"
 			}
 		}
 	}

@@ -2,4 +2,4 @@ import { render } from "preact";
 import { App } from "./app";
 import "./styles.css";
 
-render(<App />, document.getElementById("app"));
+render(<App />, document.querySelector("#app")!);
