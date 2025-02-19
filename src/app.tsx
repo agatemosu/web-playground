@@ -1,10 +1,10 @@
-import { type JSX, createRef } from "preact";
-import { useEffect } from "preact/hooks";
+import type { JSX } from "preact";
+import { useEffect, useRef } from "preact/hooks";
 import { type ConsoleMessage, createConsoleProxy } from "./console-proxy";
 
 export const App = () => {
-	const iframeRef = createRef<HTMLIFrameElement>();
-	const logRef = createRef<HTMLDivElement>();
+	const iframeRef = useRef<HTMLIFrameElement>();
+	const logRef = useRef<HTMLDivElement>();
 
 	useEffect(() => {
 		const onMessage = ({ data }: MessageEvent<ConsoleMessage>) => {
@@ -27,7 +27,7 @@ export const App = () => {
 
 		window.addEventListener("message", onMessage);
 		return () => window.removeEventListener("message", onMessage);
-	}, [iframeRef, logRef]);
+	}, []);
 
 	const onBlur: JSX.FocusEventHandler<HTMLTextAreaElement> = (e) => {
 		logRef.current.innerHTML = "";
