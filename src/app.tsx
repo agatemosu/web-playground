@@ -41,7 +41,7 @@ export const App = () => {
 	return (
 		<main className="grid grid-cols-2 h-dvh p-6 gap-6">
 			<textarea
-				className="row-span-2 bg-blue-800 resize-none font-mono"
+				className="row-span-2 bg-blue-800 resize-none font-mono selection:bg-red-800"
 				onBlur={onBlur}
 			/>
 			<iframe
