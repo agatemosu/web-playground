@@ -39,9 +39,9 @@ export const App = () => {
 	};
 
 	return (
-		<main className="grid grid-cols-2 h-dvh p-6 gap-6">
+		<main className="grid h-dvh grid-cols-2 gap-6 p-6">
 			<textarea
-				className="row-span-2 bg-blue-800 resize-none font-mono selection:bg-red-800"
+				className="row-span-2 resize-none bg-blue-800 font-mono selection:bg-red-800"
 				onBlur={onBlur}
 			/>
 			<iframe
@@ -49,7 +49,7 @@ export const App = () => {
 				className="h-full w-full bg-white"
 				title="Web playground"
 			/>
-			<div ref={logRef} className="h-full w-full bg-black overflow-x-auto" />
+			<div ref={logRef} className="h-full w-full overflow-x-auto bg-black" />
 		</main>
 	);
 };
