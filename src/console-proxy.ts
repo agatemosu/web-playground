@@ -5,7 +5,7 @@ export interface ConsoleMessage {
 }
 
 export const createConsoleProxy = (() => {
-	const cvString = (x: any) => {
+	const cvString = (x: unknown) => {
 		return typeof x === "object" || typeof x === "string"
 			? JSON.stringify(x)
 			: String(x);
@@ -16,7 +16,7 @@ export const createConsoleProxy = (() => {
 			const originalProp = target[prop];
 			if (typeof originalProp !== "function") return originalProp;
 
-			return (...args: any[]) => {
+			return (...args: unknown[]) => {
 				const msg: ConsoleMessage = {
 					args: args.map(cvString),
 					prop: prop,
