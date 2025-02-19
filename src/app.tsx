@@ -24,15 +24,8 @@ export const App = () => {
 			setLogs((prevLogs) => [...prevLogs, newLog]);
 		};
 
-		const doc = iframeRef.current.contentDocument;
-
-		doc.open();
-		doc.write("<html></html>");
-		doc.close();
-
-		const consoleProxyScript = document.createElement("script");
-		consoleProxyScript.innerHTML = `(${createConsoleProxy})()`;
-		doc.head.appendChild(consoleProxyScript);
+		const view = iframeRef.current.contentDocument.defaultView;
+		view.eval(`(${createConsoleProxy})()`);
 
 		window.addEventListener("message", onMessage);
 		return () => window.removeEventListener("message", onMessage);
