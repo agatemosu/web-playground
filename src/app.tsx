@@ -19,7 +19,7 @@ export const App = () => {
 			const newLog: Log = {
 				id: crypto.randomUUID(),
 				message: data.args.join(" "),
-				prop: String(data.prop),
+				prop: data.prop,
 			};
 			setLogs((prevLogs) => [...prevLogs, newLog]);
 		};
