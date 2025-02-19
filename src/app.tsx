@@ -1,18 +1,27 @@
 import type { JSX } from "preact";
-import { useEffect, useRef } from "preact/hooks";
+import { useEffect, useRef, useState } from "preact/hooks";
 import { type ConsoleMessage, createConsoleProxy } from "./console-proxy";
+
+interface Log {
+	id: string;
+	message: string;
+	prop: string;
+}
 
 export const App = () => {
 	const iframeRef = useRef<HTMLIFrameElement>();
-	const logRef = useRef<HTMLDivElement>();
+	const [logs, setLogs] = useState<Log[]>([]);
 
 	useEffect(() => {
 		const onMessage = ({ data }: MessageEvent<ConsoleMessage>) => {
 			if (data.type !== "console") return;
 
-			const p = document.createElement("p");
-			p.textContent = data.args.join(" ");
-			logRef.current.appendChild(p);
+			const newLog: Log = {
+				id: crypto.randomUUID(),
+				message: data.args.join(" "),
+				prop: String(data.prop),
+			};
+			setLogs((prevLogs) => [...prevLogs, newLog]);
 		};
 
 		const doc = iframeRef.current.contentDocument;
@@ -30,7 +39,7 @@ export const App = () => {
 	}, []);
 
 	const onBlur: JSX.FocusEventHandler<HTMLTextAreaElement> = (e) => {
-		logRef.current.innerHTML = "";
+		setLogs([]);
 		const doc = iframeRef.current.contentDocument;
 
 		doc.open();
@@ -49,7 +58,11 @@ export const App = () => {
 				className="h-full w-full bg-white"
 				title="Web playground"
 			/>
-			<div ref={logRef} className="h-full w-full overflow-x-auto bg-black" />
+			<div className="h-full w-full overflow-x-auto bg-black">
+				{logs.map((log) => (
+					<p key={log.id}>{log.message}</p>
+				))}
+			</div>
 		</main>
 	);
 };
