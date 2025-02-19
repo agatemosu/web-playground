@@ -30,6 +30,7 @@ export const App = () => {
 	}, [iframeRef, logRef]);
 
 	const onBlur: JSX.FocusEventHandler<HTMLTextAreaElement> = (e) => {
+		logRef.current.innerHTML = "";
 		const doc = iframeRef.current.contentDocument;
 
 		doc.open();
