@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from "preact/hooks";
 import { createConsoleProxy } from "./console-proxy";
 import type { ConsoleMessage, Log } from "./interfaces/console";
+import { ConsoleTab } from "./tabs/console";
+import { HtmlTab } from "./tabs/html";
+import { OutputTab } from "./tabs/output";
 
 export const App = () => {
 	const iframeRef = useRef<HTMLIFrameElement>(null);
@@ -41,20 +44,9 @@ export const App = () => {
 
 	return (
 		<main className="grid h-dvh grid-cols-2 gap-6 p-6">
-			<textarea
-				className="row-span-2 resize-none bg-blue-800 font-mono selection:bg-red-800"
-				onBlur={(e) => setHtml(e.currentTarget.value)}
-			/>
-			<iframe
-				ref={iframeRef}
-				className="h-full w-full bg-white"
-				title="Web playground"
-			/>
-			<div className="h-full w-full overflow-x-auto bg-black">
-				{logs.map((log) => (
-					<p key={log.id}>{log.message}</p>
-				))}
-			</div>
+			<HtmlTab setHtml={setHtml} />
+			<OutputTab iframeRef={iframeRef} />
+			<ConsoleTab logs={logs} />
 		</main>
 	);
 };
