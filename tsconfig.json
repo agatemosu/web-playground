@@ -5,7 +5,11 @@
 		"jsxImportSource": "preact",
 		"moduleResolution": "bundler",
 		"noEmit": true,
+		"paths": {
+			"react": ["./node_modules/preact/compat/"],
+			"react-dom": ["./node_modules/preact/compat/"]
+		},
 		"strict": true,
-		"target": "esnext",
+		"target": "esnext"
 	}
 }

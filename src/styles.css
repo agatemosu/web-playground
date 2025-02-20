@@ -3,3 +3,37 @@
 :root {
 	color-scheme: only dark;
 }
+
+.react-tabs {
+	display: flex;
+	flex-direction: column;
+	height: 100dvh;
+}
+
+.react-tabs__tab-list {
+	display: flex;
+	background-color: var(--color-neutral-800);
+}
+
+.react-tabs__tab {
+	outline: none;
+	border-top: 2px solid transparent;
+	padding: 0.6rem 1rem;
+	color: var(--color-neutral-300);
+}
+
+.react-tabs__tab--selected {
+	border-top-color: var(--color-blue-400);
+	background-color: var(--color-neutral-700);
+	color: white;
+}
+
+.react-tabs__tab-panel {
+	display: none;
+}
+
+.react-tabs__tab-panel--selected {
+	display: flex;
+	height: 100%;
+	overflow: auto;
+}

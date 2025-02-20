@@ -5,7 +5,7 @@ interface Props {
 }
 
 export const ConsoleTab = ({ logs }: Props) => (
-	<div className="h-full w-full overflow-x-auto bg-black">
+	<div className="w-full overflow-auto bg-neutral-700 font-mono">
 		{logs.map((log) => (
 			<p key={log.id}>{log.message}</p>
 		))}

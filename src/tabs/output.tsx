@@ -5,9 +5,5 @@ interface Props {
 }
 
 export const OutputTab = ({ iframeRef }: Props) => (
-	<iframe
-		ref={iframeRef}
-		className="h-full w-full bg-white"
-		title="Web playground"
-	/>
+	<iframe ref={iframeRef} className="w-full bg-white" title="Web playground" />
 );

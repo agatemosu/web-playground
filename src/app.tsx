@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "preact/hooks";
+import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
 import { createConsoleProxy } from "./console-proxy";
 import type { ConsoleMessage, Log } from "./interfaces/console";
 import { ConsoleTab } from "./tabs/console";
@@ -43,10 +44,21 @@ export const App = () => {
 	}, [html]);
 
 	return (
-		<main className="grid h-dvh grid-cols-2 gap-6 p-6">
-			<HtmlTab setHtml={setHtml} />
-			<OutputTab iframeRef={iframeRef} />
-			<ConsoleTab logs={logs} />
-		</main>
+		<Tabs>
+			<TabList>
+				<Tab>HTML</Tab>
+				<Tab>Output</Tab>
+				<Tab>Console</Tab>
+			</TabList>
+			<TabPanel>
+				<HtmlTab html={html} setHtml={setHtml} />
+			</TabPanel>
+			<TabPanel forceRender={true}>
+				<OutputTab iframeRef={iframeRef} />
+			</TabPanel>
+			<TabPanel>
+				<ConsoleTab logs={logs} />
+			</TabPanel>
+		</Tabs>
 	);
 };
