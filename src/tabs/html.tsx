@@ -6,7 +6,7 @@ interface Props {
 
 export const HtmlTab = ({ setHtml }: Props) => (
 	<textarea
-		className="row-span-2 resize-none bg-blue-800 font-mono selection:bg-red-800"
+		className="row-span-2 h-full w-full resize-none bg-blue-800 font-mono selection:bg-red-800"
 		onBlur={(e) => setHtml(e.currentTarget.value)}
 	/>
 );
