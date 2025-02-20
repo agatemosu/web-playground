@@ -1,8 +1,4 @@
-export interface ConsoleMessage {
-	args: string[];
-	prop: string;
-	type: "console";
-}
+import type { ConsoleMessage } from "./interfaces/console";
 
 type LogFn = (...args: unknown[]) => void;
 

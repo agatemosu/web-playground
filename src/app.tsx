@@ -1,12 +1,7 @@
 import type { JSX } from "preact";
 import { useEffect, useRef, useState } from "preact/hooks";
-import { type ConsoleMessage, createConsoleProxy } from "./console-proxy";
-
-interface Log {
-	id: string;
-	message: string;
-	prop: string;
-}
+import { createConsoleProxy } from "./console-proxy";
+import type { ConsoleMessage, Log } from "./interfaces/console";
 
 export const App = () => {
 	const iframeRef = useRef<HTMLIFrameElement>(null);
