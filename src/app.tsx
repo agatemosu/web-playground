@@ -1,4 +1,3 @@
-import type { JSX } from "preact";
 import { useEffect, useRef, useState } from "preact/hooks";
 import { createConsoleProxy } from "./console-proxy";
 import type { ConsoleMessage, Log } from "./interfaces/console";
@@ -6,6 +5,7 @@ import type { ConsoleMessage, Log } from "./interfaces/console";
 export const App = () => {
 	const iframeRef = useRef<HTMLIFrameElement>(null);
 	const [logs, setLogs] = useState<Log[]>([]);
+	const [html, setHtml] = useState<string>("");
 
 	useEffect(() => {
 		const onMessage = ({ data }: MessageEvent<ConsoleMessage>) => {
@@ -28,22 +28,22 @@ export const App = () => {
 		return () => window.removeEventListener("message", onMessage);
 	}, []);
 
-	const onBlur: JSX.FocusEventHandler<HTMLTextAreaElement> = (e) => {
+	useEffect(() => {
 		setLogs([]);
 
 		const doc = iframeRef.current?.contentDocument;
 		if (!doc) return;
 
 		doc.open();
-		doc.write(e.currentTarget.value);
+		doc.write(html);
 		doc.close();
-	};
+	}, [html]);
 
 	return (
 		<main className="grid h-dvh grid-cols-2 gap-6 p-6">
 			<textarea
 				className="row-span-2 resize-none bg-blue-800 font-mono selection:bg-red-800"
-				onBlur={onBlur}
+				onBlur={(e) => setHtml(e.currentTarget.value)}
 			/>
 			<iframe
 				ref={iframeRef}
