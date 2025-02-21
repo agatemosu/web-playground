@@ -3,6 +3,7 @@
 		"checkJs": true,
 		"jsx": "react-jsx",
 		"jsxImportSource": "preact",
+		"module": "esnext",
 		"moduleResolution": "bundler",
 		"noEmit": true,
 		"paths": {
