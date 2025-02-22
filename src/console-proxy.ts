@@ -3,11 +3,7 @@ import type { ConsoleMessage } from "./interfaces/console";
 type LogFn = (...args: unknown[]) => void;
 
 export const createConsoleProxy = (() => {
-	const cvString = (x: unknown) => {
-		return typeof x === "object" || typeof x === "string"
-			? JSON.stringify(x)
-			: String(x);
-	};
+	const { format } = window.parent.prettyFormat;
 
 	const supportedMethods = ["log", "info", "warn", "error"];
 	const unsupportedMessage: ConsoleMessage = {
@@ -25,7 +21,7 @@ export const createConsoleProxy = (() => {
 
 			return (...args: unknown[]) => {
 				const msg: ConsoleMessage = {
-					args: args.map(cvString),
+					args: args.map((x) => format(x)),
 					prop: prop,
 					type: "console",
 				};
