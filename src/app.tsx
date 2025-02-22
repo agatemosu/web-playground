@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "preact/hooks";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
-import { createConsoleProxy } from "./console-proxy";
+import { createConsoleProxyScript } from "./console-proxy";
 import type { ConsoleMessage, Log } from "./interfaces/console";
 import { ConsoleTab } from "./tabs/console";
 import { HtmlTab } from "./tabs/html";
@@ -23,24 +23,17 @@ export const App = () => {
 			setLogs((prevLogs) => [...prevLogs, newLog]);
 		};
 
-		const view = iframeRef.current?.contentDocument?.defaultView;
-		if (!view) return;
-
-		view.eval(`(${createConsoleProxy})()`);
 		window.addEventListener("message", onMessage);
-
 		return () => window.removeEventListener("message", onMessage);
 	}, []);
 
 	useEffect(() => {
 		setLogs([]);
 
-		const doc = iframeRef.current?.contentDocument;
-		if (!doc) return;
+		const iframe = iframeRef.current;
+		if (!iframe) return;
 
-		doc.open();
-		doc.write(html);
-		doc.close();
+		iframe.srcdoc = createConsoleProxyScript() + html;
 	}, [html]);
 
 	return (

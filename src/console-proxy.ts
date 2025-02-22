@@ -2,7 +2,7 @@ import type { ConsoleMessage } from "./interfaces/console";
 
 type LogFn = (...args: unknown[]) => void;
 
-export const createConsoleProxy = (() => {
+const createConsoleProxy = (() => {
 	const { format } = window.parent.prettyFormat;
 
 	const supportedMethods = ["log", "info", "warn", "error", "debug"];
@@ -34,4 +34,13 @@ export const createConsoleProxy = (() => {
 	});
 
 	window.console = consoleProxy;
+	window.addEventListener("error", (e) => console.error(e.error));
+
+	document.currentScript?.remove();
 }).toString();
+
+export const createConsoleProxyScript = () => {
+	const script = document.createElement("script");
+	script.textContent = `(${createConsoleProxy})();`;
+	return script.outerHTML;
+};
