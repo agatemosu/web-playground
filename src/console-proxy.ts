@@ -5,7 +5,7 @@ type LogFn = (...args: unknown[]) => void;
 export const createConsoleProxy = (() => {
 	const { format } = window.parent.prettyFormat;
 
-	const supportedMethods = ["log", "info", "warn", "error"];
+	const supportedMethods = ["log", "info", "warn", "error", "debug"];
 	const unsupportedMessage: ConsoleMessage = {
 		args: ["[Playground] Unsupported console message (see browser console)"],
 		prop: "warn",
