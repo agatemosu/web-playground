@@ -1,7 +1,5 @@
 import type { ConsoleMessage, Method } from "./types";
 
-type LogHandler = (...args: unknown[]) => void;
-
 const consoleInit = (() => {
 	const { format } = window.parent.prettyFormat;
 
@@ -27,7 +25,7 @@ const consoleInit = (() => {
 				};
 				window.parent.postMessage(message, "*");
 
-				const originalMethod = target[prop] as LogHandler;
+				const originalMethod = target[prop];
 				return originalMethod(...args);
 			};
 		},
