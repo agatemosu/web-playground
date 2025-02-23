@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "preact/hooks";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
-import { createConsoleProxyScript } from "./console/proxy";
+import { consoleInitScript } from "./console/proxy";
 import type { ConsoleMessage, Log } from "./console/types";
 import { ConsoleTab } from "./tabs/console";
 import { HtmlTab } from "./tabs/html";
@@ -33,7 +33,7 @@ export const App = () => {
 		const iframe = iframeRef.current;
 		if (!iframe) return;
 
-		iframe.srcdoc = createConsoleProxyScript() + html;
+		iframe.srcdoc = consoleInitScript() + html;
 	}, [html]);
 
 	return (

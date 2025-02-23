@@ -1,12 +1,12 @@
 import type { ConsoleMessage } from "./types";
 
-type LogFn = (...args: unknown[]) => void;
+type LogHandler = (...args: unknown[]) => void;
 
-const createConsoleProxy = (() => {
+const consoleInit = (() => {
 	const { format } = window.parent.prettyFormat;
 
-	const supportedMethods = ["log", "info", "warn", "error", "debug"];
-	const unsupportedMessage: ConsoleMessage = {
+	const methods = ["log", "info", "warn", "error", "debug"];
+	const unsupported: ConsoleMessage = {
 		args: ["[Playground] Unsupported console message (see browser console)"],
 		prop: "warn",
 		type: "console",
@@ -14,21 +14,21 @@ const createConsoleProxy = (() => {
 
 	const consoleProxy = new Proxy(console, {
 		get: (target, prop: keyof Console) => {
-			if (!supportedMethods.includes(prop)) {
-				window.parent.postMessage(unsupportedMessage, "*");
+			if (!methods.includes(prop)) {
+				window.parent.postMessage(unsupported, "*");
 				return target[prop];
 			}
 
 			return (...args: unknown[]) => {
-				const msg: ConsoleMessage = {
+				const message: ConsoleMessage = {
 					args: args.map((x) => format(x)),
 					prop: prop,
 					type: "console",
 				};
-				window.parent.postMessage(msg, "*");
+				window.parent.postMessage(message, "*");
 
-				const originalProp = target[prop] as LogFn;
-				return originalProp(...args);
+				const originalMethod = target[prop] as LogHandler;
+				return originalMethod(...args);
 			};
 		},
 	});
@@ -39,8 +39,8 @@ const createConsoleProxy = (() => {
 	document.currentScript?.remove();
 }).toString();
 
-export const createConsoleProxyScript = () => {
+export const consoleInitScript = () => {
 	const script = document.createElement("script");
-	script.textContent = `(${createConsoleProxy})();`;
+	script.textContent = `(${consoleInit})();`;
 	return script.outerHTML;
 };
