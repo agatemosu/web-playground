@@ -1,11 +1,11 @@
-import type { ConsoleMessage } from "./types";
+import type { ConsoleMessage, Method } from "./types";
 
 type LogHandler = (...args: unknown[]) => void;
 
 const consoleInit = (() => {
 	const { format } = window.parent.prettyFormat;
 
-	const methods = ["log", "info", "warn", "error", "debug"];
+	const methods: Method[] = ["log", "info", "warn", "error", "debug"];
 	const unsupported: ConsoleMessage = {
 		args: ["[Playground] Unsupported console message (see browser console)"],
 		prop: "warn",
@@ -13,7 +13,7 @@ const consoleInit = (() => {
 	};
 
 	const consoleProxy = new Proxy(console, {
-		get: (target, prop: keyof Console) => {
+		get: (target, prop: Method) => {
 			if (!methods.includes(prop)) {
 				window.parent.postMessage(unsupported, "*");
 				return target[prop];
