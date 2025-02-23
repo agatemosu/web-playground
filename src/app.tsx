@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "preact/hooks";
 import { Tab, TabList, TabPanel, Tabs } from "react-tabs";
-import { createConsoleProxyScript } from "./console-proxy";
-import type { ConsoleMessage, Log } from "./interfaces/console";
+import { createConsoleProxyScript } from "./console/proxy";
+import type { ConsoleMessage, Log } from "./console/types";
 import { ConsoleTab } from "./tabs/console";
 import { HtmlTab } from "./tabs/html";
 import { OutputTab } from "./tabs/output";

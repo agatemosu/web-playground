@@ -1,4 +1,4 @@
-import type { ConsoleMessage } from "./interfaces/console";
+import type { ConsoleMessage } from "./types";
 
 type LogFn = (...args: unknown[]) => void;
 

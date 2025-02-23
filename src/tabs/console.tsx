@@ -1,4 +1,4 @@
-import type { Log } from "../interfaces/console";
+import type { Log } from "../console/types";
 
 interface Props {
 	logs: Log[];
